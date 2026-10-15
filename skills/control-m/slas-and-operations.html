@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#181918">
+  <title>Control-M SLAs and Operations | Sai Pavan Rajulapati</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../shared/skill-page.css"><link rel="stylesheet" href="../shared/topic-page.css">
+</head>
+<body><div class="page"><header class="header"><a class="back" href="index.html#roadmap"><span aria-hidden="true">&#8592;</span> Back to Control-M roadmap</a></header><main>
+  <section class="topic-hero"><p class="kicker">Control-M roadmap / 04</p><h1>SLAs and operations</h1><p class="lede">Relate workflow health to business deadlines, monitor risk, and communicate status with useful operational measures.</p></section>
+  <nav class="topic-nav" aria-label="Topic sections"><a href="#sla">SLA design</a><a href="#example">Operations example</a><a href="#practice">Practice</a></nav>
+  <section class="topic-section" id="sla"><p class="kicker">01 / SLA design</p><h2>Measure outcomes, not only job success.</h2><div class="topic-columns">
+    <article class="topic-column"><h3>Business deadline</h3><p>Define when the data product or business process must be ready, including its business calendar and time zone.</p></article>
+    <article class="topic-column"><h3>Critical path</h3><p>Identify the chain of jobs that determines completion time and which upstream delays threaten the deadline.</p></article>
+    <article class="topic-column"><h3>Risk and alerting</h3><p>Set useful warning points before breach, route alerts to owners, and include impact and recovery context.</p></article>
+    <article class="topic-column"><h3>Service reporting</h3><p>Track on-time completion, duration trends, failure rate, retry frequency, and recurring bottlenecks.</p></article>
+  </div></section>
+  <section class="topic-section" id="example"><p class="kicker">02 / Operations example</p><h2>When a reporting chain is at risk.</h2><div class="topic-columns">
+    <article class="topic-column"><h3>Detect</h3><p>Monitor the target completion time and recognize a late upstream extract.</p></article>
+    <article class="topic-column"><h3>Assess</h3><p>Use the dependency flow and estimated remaining duration to determine if the deadline is at risk.</p></article>
+    <article class="topic-column"><h3>Respond</h3><p>Notify the owner with current status and recovery options; do not skip a required quality gate without approval.</p></article>
+    <article class="topic-column"><h3>Learn</h3><p>Record the cause and adjust capacity, scheduling, or dependency design if the pattern repeats.</p></article>
+  </div><div class="topic-callout"><strong>Operational principle:</strong> a green job status is not enough if the downstream data is late, incomplete, or unvalidated.</div></section>
+  <section class="topic-section" id="practice"><p class="kicker">03 / Practice</p><h2>Interview checks.</h2><div class="question-list">
+    <details><summary>How do you define an SLA for a workflow?</summary><p>Start with a business-ready deadline, calendar, and time zone. Map the critical path, define warning and breach thresholds, and identify owners and recovery actions.</p></details>
+    <details><summary>What metrics help improve batch operations?</summary><p>On-time completion, job duration, queue/resource waits, failure and retry rates, data freshness, and recurring root causes.</p></details>
+    <details><summary>What would you do if a workflow is green but its data is incomplete?</summary><p>Use data-quality and reconciliation signals, hold downstream publication, identify the missing input or failed validation, and communicate the impact before releasing corrected output.</p></details>
+  </div></section>
+  <nav class="topic-footer-nav" aria-label="Adjacent Control-M topics"><a href="monitoring-and-recovery.html">&#8592; Monitoring and recovery</a><a href="index.html#roadmap">Back to roadmap &#8594;</a></nav>
+</main><footer class="footer"><span>Sai Pavan Rajulapati</span><span>Control-M / SLAs and operations</span></footer></div></body>
+</html>

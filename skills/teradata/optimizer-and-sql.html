@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#181918">
+  <title>Teradata Optimizer and SQL | Sai Pavan Rajulapati</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/skill-page.css"><link rel="stylesheet" href="../shared/topic-page.css">
+</head>
+<body><div class="page">
+  <header class="header"><a class="back" href="index.html#roadmap"><span aria-hidden="true">&#8592;</span> Back to Teradata roadmap</a></header>
+  <main>
+    <section class="topic-hero"><p class="kicker">Teradata roadmap / 03</p><h1>Optimizer and SQL</h1><p class="lede">Use statistics and EXPLAIN to understand optimizer choices; write SQL that keeps joins, filters, and intermediate data under control.</p></section>
+    <nav class="topic-nav" aria-label="Topic sections"><a href="#optimizer">Optimizer</a><a href="#examples">SQL examples</a><a href="#practice">Practice</a></nav>
+    <section class="topic-section" id="optimizer"><p class="kicker">01 / Query planning</p><h2>Estimates shape the plan.</h2>
+      <div class="topic-columns">
+        <article class="topic-column"><h3>Statistics</h3><p>Statistics provide the optimizer with information about row counts, value distributions, and indexes. They can affect join order, access methods, and redistribution choices.</p></article>
+        <article class="topic-column"><h3>EXPLAIN</h3><p>Read planned steps for index access, full scans, joins, redistribution, and spool. Use it before and after a targeted change, then compare to actual runtime.</p></article>
+        <article class="topic-column"><h3>Spool</h3><p>Spool holds intermediate query results. Large joins, skew, and weak cardinality estimates can increase spool demand or cause a query to fail.</p></article>
+        <article class="topic-column"><h3>QUALIFY</h3><p>QUALIFY filters after analytic/window functions are evaluated, which is useful for top-N and latest-row-per-key patterns.</p></article>
+      </div>
+    </section>
+    <section class="topic-section" id="examples"><p class="kicker">02 / SQL examples</p><h2>Collect relevant statistics.</h2>
+      <pre class="code-example"><code>COLLECT STATISTICS COLUMN (customer_id)
+ON mart.orders;</code></pre>
+      <p style="margin-top:22px">Use QUALIFY to select the latest row per customer:</p>
+      <pre class="code-example"><code>SELECT customer_id, status, updated_at
+FROM staging.customer_status
+QUALIFY ROW_NUMBER() OVER (
+  PARTITION BY customer_id
+  ORDER BY updated_at DESC
+) = 1;</code></pre>
+      <div class="topic-callout"><strong>Practice:</strong> explain why you chose the statistic or query pattern, how EXPLAIN changed, and what runtime evidence confirmed the improvement.</div>
+    </section>
+    <section class="topic-section" id="practice"><p class="kicker">03 / Practice</p><h2>Interview checks.</h2><div class="question-list">
+      <details><summary>When should you collect statistics?</summary><p>Collect them on columns or indexes relevant to filters, joins, and distribution when the optimizer needs better estimates. Refresh them when data changes materially and validate plan impact.</p></details>
+      <details><summary>What do you look for in EXPLAIN?</summary><p>Check access methods, estimated rows, join order, redistribution, full scans, and spool-heavy steps. Compare the plan to query intent and actual runtime evidence.</p></details>
+      <details><summary>Why can a query use an index and still be slow?</summary><p>The access may still return many rows, later joins may redistribute large inputs, estimates may be wrong, or spool and skew may dominate. Examine the full plan rather than one access step.</p></details>
+    </div></section>
+    <nav class="topic-footer-nav" aria-label="Adjacent Teradata topics"><a href="primary-indexes-and-skew.html">&#8592; Primary indexes and skew</a><a href="loading-and-operations.html">Next: Loading and operations &#8594;</a></nav>
+  </main><footer class="footer"><span>Sai Pavan Rajulapati</span><span>Teradata / Optimizer and SQL</span></footer>
+</div></body>
+</html>

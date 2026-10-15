@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#181918">
+  <title>GitHub Pull Requests and Reviews | Sai Pavan Rajulapati</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../shared/skill-page.css"><link rel="stylesheet" href="../shared/topic-page.css">
+</head>
+<body><div class="page"><header class="header"><a class="back" href="index.html#roadmap"><span aria-hidden="true">&#8592;</span> Back to GitHub roadmap</a></header><main>
+  <section class="topic-hero"><p class="kicker">GitHub roadmap / 03</p><h1>Pull requests and reviews</h1><p class="lede">Use pull requests to explain a change, gather feedback, run checks, and merge with an auditable team decision.</p></section>
+  <nav class="topic-nav" aria-label="Topic sections"><a href="#workflow">PR workflow</a><a href="#review">Review example</a><a href="#practice">Practice</a></nav>
+  <section class="topic-section" id="workflow"><p class="kicker">01 / Review workflow</p><h2>Make intent and risk visible.</h2><div class="topic-columns">
+    <article class="topic-column"><h3>Describe the change</h3><p>State the problem, the implementation approach, the validation performed, and any rollout or rollback risk.</p></article>
+    <article class="topic-column"><h3>Keep scope focused</h3><p>Small, coherent pull requests are easier to review and less likely to mix unrelated decisions.</p></article>
+    <article class="topic-column"><h3>Use checks</h3><p>Run automated tests and required checks. Treat failures as evidence to investigate rather than bypass by default.</p></article>
+    <article class="topic-column"><h3>Merge deliberately</h3><p>Choose merge, squash, or rebase according to team history conventions and repository policy.</p></article>
+  </div></section>
+  <section class="topic-section" id="review"><p class="kicker">02 / Review example</p><h2>A useful pull-request summary.</h2><pre class="code-example"><code>Problem: describe the behavior that needs to change.
+Approach: summarize the files and decisions involved.
+Validation: list tests, queries, or manual checks run.
+Risk: note rollout considerations and recovery plan.</code></pre><div class="topic-callout"><strong>Reviewer focus:</strong> correctness, edge cases, data integrity, operational impact, test coverage, and whether the implementation fits the intended scope.</div></section>
+  <section class="topic-section" id="practice"><p class="kicker">03 / Practice</p><h2>Interview checks.</h2><div class="question-list">
+    <details><summary>What makes a pull request easy to review?</summary><p>A focused change, clear context, readable commits, relevant tests, and explicit risks or migration steps. Respond to review comments with the reasoning or follow-up change.</p></details>
+    <details><summary>What should happen when a required check fails?</summary><p>Inspect the failure, determine whether it is caused by the change or the environment, fix or document it, and follow repository policy before merging.</p></details>
+    <details><summary>How do you handle a disagreement in review?</summary><p>Clarify the requirement and tradeoffs, refer to conventions or evidence, and reach agreement with the code owner. Record important decisions so future contributors understand them.</p></details>
+  </div></section>
+  <nav class="topic-footer-nav" aria-label="Adjacent GitHub topics"><a href="branches-and-collaboration.html">&#8592; Branches and collaboration</a><a href="actions-and-security.html">Next: Actions and security &#8594;</a></nav>
+</main><footer class="footer"><span>Sai Pavan Rajulapati</span><span>GitHub / Pull requests</span></footer></div></body>
+</html>

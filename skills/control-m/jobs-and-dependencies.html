@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#181918">
+  <title>Control-M Jobs and Dependencies | Sai Pavan Rajulapati</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../shared/skill-page.css"><link rel="stylesheet" href="../shared/topic-page.css">
+</head>
+<body><div class="page"><header class="header"><a class="back" href="index.html#roadmap"><span aria-hidden="true">&#8592;</span> Back to Control-M roadmap</a></header><main>
+  <section class="topic-hero"><p class="kicker">Control-M roadmap / 02</p><h1>Jobs and dependencies</h1><p class="lede">Model jobs as a readable workflow with explicit conditions, resources, variables, and success or failure paths.</p></section>
+  <nav class="topic-nav" aria-label="Topic sections"><a href="#design">Job design</a><a href="#example">Workflow example</a><a href="#practice">Practice</a></nav>
+  <section class="topic-section" id="design"><p class="kicker">01 / Job design</p><h2>Describe executable work and its contract.</h2><div class="topic-columns">
+    <article class="topic-column"><h3>Job definition</h3><p>Specify the executable or application, host or agent, runtime parameters, owner, and operational standards required by the job type.</p></article>
+    <article class="topic-column"><h3>Conditions</h3><p>Use predecessor and successor conditions to represent when work is eligible and which downstream jobs may proceed.</p></article>
+    <article class="topic-column"><h3>Resources</h3><p>Declare required resources or concurrency limits where supported so competing jobs do not over-consume shared capacity.</p></article>
+    <article class="topic-column"><h3>Variables and outputs</h3><p>Pass batch identifiers, dates, or produced values through supported variables and outputs with clear ownership.</p></article>
+  </div></section>
+  <section class="topic-section" id="example"><p class="kicker">02 / Workflow example</p><h2>Load, validate, publish.</h2><div class="topic-columns">
+    <article class="topic-column"><h3>Load job</h3><p>Runs the ingestion command and reports completion with a batch identifier.</p></article>
+    <article class="topic-column"><h3>Validation job</h3><p>Waits for load success, checks counts and required keys, then sets a validated condition.</p></article>
+    <article class="topic-column"><h3>Publish job</h3><p>Runs only after validation success and records the output-ready condition.</p></article>
+    <article class="topic-column"><h3>Failure path</h3><p>Routes failures to alert and recovery handling rather than releasing downstream consumers.</p></article>
+  </div><div class="topic-callout"><strong>Design test:</strong> verify what happens when each job fails, reruns, or finishes late; check that success conditions cannot be left over from an earlier batch.</div></section>
+  <section class="topic-section" id="practice"><p class="kicker">03 / Practice</p><h2>Interview checks.</h2><div class="question-list">
+    <details><summary>Why prefer event or condition dependencies over fixed delays?</summary><p>Conditions express actual upstream completion and reduce race conditions caused by unpredictable run times. Fixed waits can waste time and still fail when an upstream job runs longer than expected.</p></details>
+    <details><summary>How would you prevent stale conditions from releasing a new batch?</summary><p>Use batch-aware condition naming or supported cleanup and ordering rules so each cycle consumes the right predecessor state. Validate this behavior with overlapping and late runs.</p></details>
+    <details><summary>What information should a job definition make clear?</summary><p>What runs, where it runs, required parameters and resources, expected outputs, owner, schedule or dependency, alerting, and recovery expectations.</p></details>
+  </div></section>
+  <nav class="topic-footer-nav" aria-label="Adjacent Control-M topics"><a href="architecture-and-scheduling.html">&#8592; Architecture and scheduling</a><a href="monitoring-and-recovery.html">Next: Monitoring and recovery &#8594;</a></nav>
+</main><footer class="footer"><span>Sai Pavan Rajulapati</span><span>Control-M / Jobs and dependencies</span></footer></div></body>
+</html>

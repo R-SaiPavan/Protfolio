@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#181918">
+  <title>Teradata Loading and Operations | Sai Pavan Rajulapati</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/skill-page.css"><link rel="stylesheet" href="../shared/topic-page.css">
+</head>
+<body><div class="page">
+  <header class="header"><a class="back" href="index.html#roadmap"><span aria-hidden="true">&#8592;</span> Back to Teradata roadmap</a></header>
+  <main>
+    <section class="topic-hero"><p class="kicker">Teradata roadmap / 04</p><h1>Loading and operations</h1><p class="lede">Plan reliable batch loads with explicit validation, restart points, and clear operational monitoring.</p></section>
+    <nav class="topic-nav" aria-label="Topic sections"><a href="#load-design">Load design</a><a href="#example">Example flow</a><a href="#practice">Practice</a></nav>
+    <section class="topic-section" id="load-design"><p class="kicker">01 / Load design</p><h2>Choose a load path for the data and recovery needs.</h2>
+      <div class="topic-columns">
+        <article class="topic-column"><h3>Bulk utilities</h3><p>Teradata environments commonly use utilities such as FastLoad, MultiLoad, or TPT. Selection depends on source, target table state, operation type, concurrency, and platform/version constraints.</p></article>
+        <article class="topic-column"><h3>Stage and validate</h3><p>Land source data in a controlled staging area. Validate schema, required keys, counts, and rejected rows before publishing to reporting tables.</p></article>
+        <article class="topic-column"><h3>Make reruns safe</h3><p>Assign each load a batch identifier and record status. Design cleanup or restart steps so a retry does not duplicate accepted rows or skip incomplete work.</p></article>
+        <article class="topic-column"><h3>Monitor operations</h3><p>Track start/end times, rows loaded, rejects, failures, and downstream readiness. Surface actionable alerts and retain enough context to investigate incidents.</p></article>
+      </div>
+    </section>
+    <section class="topic-section" id="example"><p class="kicker">02 / Example flow</p><h2>Separate load, check, and publish.</h2>
+      <pre class="code-example"><code>-- 1. Load the source batch to a staging table
+-- 2. Validate batch_id, keys, and row counts
+-- 3. Apply a repeat-safe merge or insert strategy
+-- 4. Reconcile target counts and mark the batch complete</code></pre>
+      <div class="topic-callout"><strong>Operational example:</strong> if a load fails after staging, keep the batch identifier and failure status. Correct or isolate rejected records, then restart from the validated staging step rather than blindly replaying every upstream action.</div>
+    </section>
+    <section class="topic-section" id="practice"><p class="kicker">03 / Practice</p><h2>Interview checks.</h2><div class="question-list">
+      <details><summary>How do you choose between Teradata load utilities?</summary><p>Start with the required operation, source format, target-table state, and expected volume. Check the utility's restrictions and platform version, then compare operational recovery, throughput, and maintainability.</p></details>
+      <details><summary>How do you restart a failed batch safely?</summary><p>Track batch IDs and step status, preserve or clean staging data intentionally, and make target writes idempotent. Reconcile counts and keys before marking the batch complete.</p></details>
+      <details><summary>What metrics belong on a load dashboard?</summary><p>Track duration, rows read and written, rejects, retry count, freshness, status by batch, and downstream completion. Alert on actionable failure and missed service objectives.</p></details>
+    </div></section>
+    <nav class="topic-footer-nav" aria-label="Adjacent Teradata topics"><a href="optimizer-and-sql.html">&#8592; Optimizer and SQL</a><a href="index.html#roadmap">Back to roadmap &#8594;</a></nav>
+  </main><footer class="footer"><span>Sai Pavan Rajulapati</span><span>Teradata / Loading and operations</span></footer>
+</div></body>
+</html>

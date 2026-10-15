@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#181918">
+  <title>PowerCenter Sessions and Workflows | Sai Pavan Rajulapati</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../shared/skill-page.css"><link rel="stylesheet" href="../shared/topic-page.css">
+</head>
+<body><div class="page"><header class="header"><a class="back" href="index.html#roadmap"><span aria-hidden="true">&#8592;</span> Back to PowerCenter roadmap</a></header><main>
+  <section class="topic-hero"><p class="kicker">PowerCenter roadmap / 03</p><h1>Sessions and workflows</h1><p class="lede">Configure runtime behavior and orchestrate dependencies so ETL runs are observable, restartable, and safe to operate.</p></section>
+  <nav class="topic-nav" aria-label="Topic sections"><a href="#sessions">Sessions</a><a href="#workflow">Workflow pattern</a><a href="#practice">Practice</a></nav>
+  <section class="topic-section" id="sessions"><p class="kicker">01 / Runtime configuration</p><h2>A session connects a mapping to its run context.</h2><div class="topic-columns">
+    <article class="topic-column"><h3>Connections</h3><p>Bind source and target connections through environment-appropriate configuration; avoid hard-coding environment secrets in objects.</p></article>
+    <article class="topic-column"><h3>Parameters and variables</h3><p>Use parameter files or supported configuration to supply values such as dates, schemas, and file paths per environment or batch.</p></article>
+    <article class="topic-column"><h3>Session properties</h3><p>Review commit behavior, error thresholds, tracing, partitioning, and recovery settings based on the source and target requirements.</p></article>
+    <article class="topic-column"><h3>Workflow dependencies</h3><p>Define success, failure, and decision paths explicitly. Make dependencies reflect data readiness, not assumed timing.</p></article>
+  </div></section>
+  <section class="topic-section" id="workflow"><p class="kicker">02 / Example workflow</p><h2>Stage, validate, publish.</h2><div class="topic-columns">
+    <article class="topic-column"><h3>Stage session</h3><p>Load the batch into a staging target and record the batch identifier.</p></article>
+    <article class="topic-column"><h3>Validation task</h3><p>Check required fields, row counts, and rejected records; branch to an alert path if thresholds fail.</p></article>
+    <article class="topic-column"><h3>Publish session</h3><p>Run the target update only after validation succeeds, using a repeat-safe load strategy.</p></article>
+    <article class="topic-column"><h3>Completion and recovery</h3><p>Record the final batch state and define which task can be restarted without repeating completed work.</p></article>
+  </div></section>
+  <section class="topic-section" id="practice"><p class="kicker">03 / Practice</p><h2>Interview checks.</h2><div class="question-list">
+    <details><summary>What is configured in a session versus a workflow?</summary><p>A session configures execution of a mapping, including connections and runtime properties. A workflow orchestrates sessions and tasks, dependencies, scheduling, and recovery paths.</p></details>
+    <details><summary>How do parameter files help across environments?</summary><p>They externalize values that change across environments or runs, such as connections or source paths, allowing the same reusable metadata to be configured safely.</p></details>
+    <details><summary>How would you design a restartable workflow?</summary><p>Track batch and task status, make steps idempotent, define success and failure transitions, and ensure restart points do not duplicate already-published data.</p></details>
+  </div></section>
+  <nav class="topic-footer-nav" aria-label="Adjacent topics"><a href="mappings-and-transformations.html">&#8592; Mappings and transformations</a><a href="performance-and-recovery.html">Next: Performance and recovery &#8594;</a></nav>
+</main><footer class="footer"><span>Sai Pavan Rajulapati</span><span>PowerCenter / Sessions</span></footer></div></body>
+</html>

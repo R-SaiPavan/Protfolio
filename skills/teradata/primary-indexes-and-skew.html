@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#181918">
+  <title>Teradata Primary Indexes and Skew | Sai Pavan Rajulapati</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/skill-page.css"><link rel="stylesheet" href="../shared/topic-page.css">
+</head>
+<body><div class="page">
+  <header class="header"><a class="back" href="index.html#roadmap"><span aria-hidden="true">&#8592;</span> Back to Teradata roadmap</a></header>
+  <main>
+    <section class="topic-hero"><p class="kicker">Teradata roadmap / 02</p><h1>Primary indexes and skew</h1><p class="lede">Learn how the Primary Index affects row distribution and access, and how uneven distribution can become a performance bottleneck.</p></section>
+    <nav class="topic-nav" aria-label="Topic sections"><a href="#indexes">Index choices</a><a href="#example">SQL examples</a><a href="#practice">Practice</a></nav>
+    <section class="topic-section" id="indexes"><p class="kicker">01 / Data distribution</p><h2>Choose for the workload and data.</h2>
+      <div class="topic-columns">
+        <article class="topic-column"><h3>Primary Index</h3><p>The PI determines how rows are hashed and distributed among AMPs, and can provide an efficient path for matching values.</p></article>
+        <article class="topic-column"><h3>UPI vs NUPI</h3><p>A Unique PI enforces uniqueness for its indexed value. A Non-Unique PI permits repeated values. Neither should be chosen without understanding source keys and data distribution.</p></article>
+        <article class="topic-column"><h3>Secondary indexes</h3><p>Secondary indexes can support alternate access patterns, with additional maintenance and storage cost. Check the supported index type and workload before adding one.</p></article>
+        <article class="topic-column"><h3>Skew</h3><p>Skew occurs when rows or processing are unevenly distributed across AMPs. Low-cardinality or heavily repeated PI values are common warning signs.</p></article>
+      </div>
+    </section>
+    <section class="topic-section" id="example"><p class="kicker">02 / SQL examples</p><h2>Check cardinality and duplicates.</h2>
+      <pre class="code-example"><code>SELECT customer_id, COUNT(*) AS row_count
+FROM staging.orders
+GROUP BY customer_id
+ORDER BY row_count DESC;</code></pre>
+      <p style="margin-top:22px">A possible table definition. Choose the PI from measured cardinality, skew, and common access patterns.</p>
+      <pre class="code-example"><code>CREATE MULTISET TABLE mart.orders (
+  order_id BIGINT,
+  customer_id BIGINT,
+  order_date DATE,
+  order_total DECIMAL(12,2)
+)
+PRIMARY INDEX (customer_id);</code></pre>
+      <div class="topic-callout"><strong>Example decision:</strong> if most queries join by customer but a few customers contain a disproportionate share of rows, compare candidate PI distributions and workload benefits before committing to the design.</div>
+    </section>
+    <section class="topic-section" id="practice"><p class="kicker">03 / Practice</p><h2>Interview checks.</h2><div class="question-list">
+      <details><summary>Does a Primary Index always enforce uniqueness?</summary><p>No. A NUPI allows duplicate PI values. A UPI enforces uniqueness for its indexed value. A PI is primarily a distribution and access design choice, not automatically the same as a logical primary key.</p></details>
+      <details><summary>How would you diagnose AMP skew?</summary><p>Inspect row counts or workload by AMP, review the PI values and their frequency, and check EXPLAIN for redistribution and join steps. Compare candidate distribution keys against real query patterns.</p></details>
+      <details><summary>What tradeoffs come with a secondary index?</summary><p>It can speed selected access patterns, but adds storage and maintenance during writes. Confirm the workload benefit through measurement and account for the extra upkeep.</p></details>
+    </div></section>
+    <nav class="topic-footer-nav" aria-label="Adjacent Teradata topics"><a href="architecture-and-parallelism.html">&#8592; Architecture and parallelism</a><a href="optimizer-and-sql.html">Next: Optimizer and SQL &#8594;</a></nav>
+  </main><footer class="footer"><span>Sai Pavan Rajulapati</span><span>Teradata / Primary indexes and skew</span></footer>
+</div></body>
+</html>

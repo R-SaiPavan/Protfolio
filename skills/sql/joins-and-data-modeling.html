@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#181918">
+  <title>SQL Joins and Data Modeling | Sai Pavan Rajulapati</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../shared/skill-page.css"><link rel="stylesheet" href="../shared/topic-page.css">
+</head>
+<body><div class="page"><header class="header"><a class="back" href="index.html#roadmap"><span aria-hidden="true">&#8592;</span> Back to SQL roadmap</a></header><main>
+  <section class="topic-hero"><p class="kicker">SQL roadmap / 02</p><h1>Joins and data modeling</h1><p class="lede">Understand row grain, join cardinality, and the reasons a query can duplicate or drop records.</p></section>
+  <nav class="topic-nav" aria-label="Topic sections"><a href="#joins">Join behavior</a><a href="#examples">Examples</a><a href="#practice">Practice</a></nav>
+  <section class="topic-section" id="joins"><p class="kicker">01 / Join behavior</p><h2>Know the grain on both sides.</h2><div class="topic-columns">
+    <article class="topic-column"><h3>INNER JOIN</h3><p>Returns matching rows. Rows without a match on either side are excluded.</p></article>
+    <article class="topic-column"><h3>LEFT JOIN</h3><p>Preserves all left-side rows and returns matching right-side data when available. Right-side filters in WHERE can unintentionally remove unmatched rows.</p></article>
+    <article class="topic-column"><h3>Cardinality</h3><p>A one-to-many relationship multiplies matching rows. Check uniqueness and row counts before aggregating joined data.</p></article>
+    <article class="topic-column"><h3>Data grain</h3><p>State what one row represents in each table. Join on keys that reflect that grain; avoid joining facts only by a non-unique descriptive attribute.</p></article>
+  </div></section>
+  <section class="topic-section" id="examples"><p class="kicker">02 / Examples</p><h2>Find unmatched records without multiplying rows.</h2><pre class="code-example"><code>SELECT c.customer_id
+FROM customers c
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM orders o
+  WHERE o.customer_id = c.customer_id
+);</code></pre><p style="margin-top:22px">Before joining two facts, aggregate each to the shared grain when the report needs one row per customer:</p><pre class="code-example"><code>WITH customer_orders AS (
+  SELECT customer_id, SUM(order_total) AS total_sales
+  FROM orders
+  GROUP BY customer_id
+)
+SELECT c.customer_id, o.total_sales
+FROM customers c
+LEFT JOIN customer_orders o
+  ON o.customer_id = c.customer_id;</code></pre></section>
+  <section class="topic-section" id="practice"><p class="kicker">03 / Practice</p><h2>Interview checks.</h2><div class="question-list">
+    <details><summary>A join doubled your total. What do you inspect?</summary><p>Check the grain and uniqueness of both join keys. Measure rows per key, identify many-to-many matches, and aggregate or deduplicate only when it matches the intended business definition.</p></details>
+    <details><summary>How can a WHERE condition turn a LEFT JOIN into an effective INNER JOIN?</summary><p>A WHERE predicate on the right-side table filters out NULL-extended unmatched rows. Put a match condition in ON when unmatched left rows should remain, or explicitly allow nulls where appropriate.</p></details>
+    <details><summary>When is NOT EXISTS preferable to NOT IN?</summary><p>NOT EXISTS expresses an anti-join and avoids the NULL behavior that can make NOT IN return unexpected results if the subquery contains NULL. Check optimizer behavior and indexes for the target database.</p></details>
+  </div></section>
+  <nav class="topic-footer-nav" aria-label="Adjacent SQL topics"><a href="query-foundations.html">&#8592; Query foundations</a><a href="aggregation-and-window-functions.html">Next: Aggregation and windows &#8594;</a></nav>
+</main><footer class="footer"><span>Sai Pavan Rajulapati</span><span>SQL / Joins and modeling</span></footer></div></body>
+</html>

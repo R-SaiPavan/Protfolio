@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#181918">
+  <title>SQL Study Guide | Sai Pavan Rajulapati</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/skill-page.css">
+  <link rel="stylesheet" href="../shared/topic-page.css">
+  <link rel="stylesheet" href="../shared/skill-guide.css">
+</head>
+<body data-guide="sql"><div class="page">
+  <header class="header"><a class="back" href="../../index.html#preparation"><span aria-hidden="true">&#8592;</span> Back to Interview Preparation</a></header>
+  <main>
+    <section class="hero"><p class="kicker">Skill notes / Query language</p><h1>SQL</h1><p class="lede">A focused SQL study guide for data engineering work: querying, joins, analytics, data quality, and performance reasoning.</p><span class="status">Roadmap · Core notes · Interview practice</span></section>
+    <nav class="guide-nav" aria-label="SQL guide sections"><a href="#roadmap">Roadmap</a><a href="#notes">Core notes</a><a href="#interview">Interview practice</a></nav>
+    <section class="guide-section" id="roadmap"><p class="kicker">01 / Learning roadmap</p><h2>Build from querying to tuning.</h2><p class="guide-lede">Open each topic for examples and practice. Reviewed progress saves in this browser.</p><div class="guide-progress"><span>Progress</span><progress data-guide-progress max="4" value="0" aria-label="SQL roadmap completion"></progress><span data-guide-count>0 / 4 complete</span></div><div class="guide-roadmap">
+      <div class="guide-step"><input id="sql-step-foundations" type="checkbox" aria-label="Mark SQL foundations complete" data-guide-step><label for="sql-step-foundations"><a href="query-foundations.html">Query foundations</a><span>SELECT, filtering, sorting, NULL behavior, and CASE expressions.</span></label></div>
+      <div class="guide-step"><input id="sql-step-joins" type="checkbox" aria-label="Mark joins and modeling complete" data-guide-step><label for="sql-step-joins"><a href="joins-and-data-modeling.html">Joins and data modeling</a><span>Join types, keys, grain, subqueries, and duplicate control.</span></label></div>
+      <div class="guide-step"><input id="sql-step-analytics" type="checkbox" aria-label="Mark aggregation and windows complete" data-guide-step><label for="sql-step-analytics"><a href="aggregation-and-window-functions.html">Aggregation and window functions</a><span>GROUP BY, HAVING, ranking, frames, and latest-row patterns.</span></label></div>
+      <div class="guide-step"><input id="sql-step-performance" type="checkbox" aria-label="Mark performance and transactions complete" data-guide-step><label for="sql-step-performance"><a href="performance-and-transactions.html">Performance and transactions</a><span>Plans, indexes, predicates, concurrency, and transaction safety.</span></label></div>
+    </div></section>
+    <section class="guide-section" id="notes"><p class="kicker">02 / Core notes</p><h2>Reason about rows and results.</h2><div class="guide-notes">
+      <article class="guide-note"><h3>Think in sets</h3><p>SQL operates on relations. Define the intended row grain before joining or aggregating to avoid accidental duplication.</p></article>
+      <article class="guide-note"><h3>NULL is unknown</h3><p>Use IS NULL or IS NOT NULL. Comparisons with NULL do not behave like ordinary true or false comparisons.</p></article>
+      <article class="guide-note"><h3>Window functions</h3><p>Window functions calculate across related rows while preserving row-level output. Choose a deterministic ORDER BY when selecting one record.</p></article>
+      <article class="guide-note"><h3>Execution order</h3><p>Know how FROM, WHERE, GROUP BY, HAVING, SELECT, window evaluation, and final ordering relate when diagnosing query behavior.</p></article>
+    </div></section>
+    <section class="guide-section" id="interview"><p class="kicker">03 / Interview practice</p><h2>Questions and answer frameworks.</h2><div class="guide-practice">
+      <details><summary>How would you keep the latest row for each customer?</summary><p>Use ROW_NUMBER partitioned by customer and ordered by an update timestamp descending, with a stable tie-breaker. Filter to row number 1 in a subquery or with QUALIFY where supported.</p></details>
+      <details><summary>What is the difference between WHERE and HAVING?</summary><p>WHERE filters input rows before grouping. HAVING filters grouped results after aggregation.</p></details>
+      <details><summary>How can a join unexpectedly multiply rows?</summary><p>The join keys may not be unique on one or both sides, or the chosen grain may be wrong. Check key cardinality, aggregate or deduplicate intentionally, and validate row counts before and after joins.</p></details>
+      <details><summary>How do you tune a slow query?</summary><p>Inspect the execution plan and workload evidence, then check scans, join strategy, filters, cardinality estimates, and returned columns. Make one targeted change and compare runtime and resource usage.</p></details>
+    </div></section>
+  </main><footer class="footer"><span>Sai Pavan Rajulapati</span><span>SQL / Query language</span></footer>
+  <script src="../shared/skill-guide.js"></script>
+</div></body>
+</html>

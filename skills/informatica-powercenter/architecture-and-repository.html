@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#181918">
+  <title>PowerCenter Architecture and Repository | Sai Pavan Rajulapati</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../shared/skill-page.css"><link rel="stylesheet" href="../shared/topic-page.css">
+</head>
+<body><div class="page"><header class="header"><a class="back" href="index.html#roadmap"><span aria-hidden="true">&#8592;</span> Back to PowerCenter roadmap</a></header><main>
+  <section class="topic-hero"><p class="kicker">PowerCenter roadmap / 01</p><h1>Architecture and repository</h1><p class="lede">Understand how PowerCenter metadata is stored, how services are configured, and how a workflow reaches execution.</p></section>
+  <nav class="topic-nav" aria-label="Topic sections"><a href="#components">Components</a><a href="#flow">Execution flow</a><a href="#practice">Practice</a></nav>
+  <section class="topic-section" id="components"><p class="kicker">01 / Components</p><h2>Separate design-time metadata from runtime execution.</h2><div class="topic-columns">
+    <article class="topic-column"><h3>Client tools</h3><p>Design and administration tools create or manage mappings, workflows, connections, and runtime configuration.</p></article>
+    <article class="topic-column"><h3>Repository Service</h3><p>Manages access to the PowerCenter repository and its stored metadata, versions, folders, and objects.</p></article>
+    <article class="topic-column"><h3>Integration Service</h3><p>Runs workflows and sessions, reads sources, applies mapping logic, and writes target data.</p></article>
+    <article class="topic-column"><h3>Repository database</h3><p>Stores metadata in a supported relational database. Protect repository access and coordinate object promotion across environments.</p></article>
+  </div></section>
+  <section class="topic-section" id="flow"><p class="kicker">02 / Execution flow</p><h2>Trace a mapping from design to target.</h2><div class="topic-columns">
+    <article class="topic-column"><h3>Design</h3><p>Create source and target definitions, then connect transformations in a mapping.</p></article>
+    <article class="topic-column"><h3>Configure</h3><p>Bind the mapping to a session with runtime connections, parameters, and execution options.</p></article>
+    <article class="topic-column"><h3>Orchestrate</h3><p>Place the session in a workflow, define dependencies, schedules, and failure paths.</p></article>
+    <article class="topic-column"><h3>Execute and monitor</h3><p>The Integration Service runs the workflow and writes session logs and run status for operational review.</p></article>
+  </div><div class="topic-callout"><strong>Example:</strong> promote a validated mapping and workflow from development to test by moving repository objects and environment-specific configuration through the approved deployment path.</div></section>
+  <section class="topic-section" id="practice"><p class="kicker">03 / Practice</p><h2>Interview checks.</h2><div class="question-list">
+    <details><summary>What is stored in the repository?</summary><p>PowerCenter repository metadata, such as folders, mappings, sessions, workflows, connections, and object versions. Runtime execution is performed by the Integration Service.</p></details>
+    <details><summary>What is the role of the Integration Service?</summary><p>It executes workflows and sessions, reads configured sources, runs mapping transformations, writes targets, and records operational logs and status.</p></details>
+    <details><summary>How do you promote a workflow safely?</summary><p>Validate object dependencies, move the required metadata using the team's deployment process, apply environment-specific connections and parameters, then run checks in the target environment.</p></details>
+  </div></section>
+  <nav class="topic-footer-nav" aria-label="Adjacent topics"><a href="index.html#roadmap">&#8592; PowerCenter roadmap</a><a href="mappings-and-transformations.html">Next: Mappings and transformations &#8594;</a></nav>
+</main><footer class="footer"><span>Sai Pavan Rajulapati</span><span>PowerCenter / Architecture</span></footer></div></body>
+</html>

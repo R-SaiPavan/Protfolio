@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#181918">
+  <title>Control-M Architecture and Scheduling | Sai Pavan Rajulapati</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../shared/skill-page.css"><link rel="stylesheet" href="../shared/topic-page.css">
+</head>
+<body><div class="page"><header class="header"><a class="back" href="index.html#roadmap"><span aria-hidden="true">&#8592;</span> Back to Control-M roadmap</a></header><main>
+  <section class="topic-hero"><p class="kicker">Control-M roadmap / 01</p><h1>Architecture and scheduling</h1><p class="lede">Understand the main Control-M components and how calendars, scheduling rules, and time zones determine when work becomes eligible.</p></section>
+  <nav class="topic-nav" aria-label="Topic sections"><a href="#components">Components</a><a href="#schedule">Schedule example</a><a href="#practice">Practice</a></nav>
+  <section class="topic-section" id="components"><p class="kicker">01 / Components</p><h2>Connect definitions to execution.</h2><div class="topic-columns">
+    <article class="topic-column"><h3>Enterprise Manager</h3><p>Provides centralized visibility and management across the Control-M environment, subject to the product deployment and version.</p></article>
+    <article class="topic-column"><h3>Control-M/Server</h3><p>Manages scheduling and job workflow state for its environment and communicates with agents.</p></article>
+    <article class="topic-column"><h3>Agent</h3><p>Runs work on a host and reports job status back to the scheduling environment.</p></article>
+    <article class="topic-column"><h3>Calendars and time zones</h3><p>Business days, holidays, time zones, and daylight-saving changes affect the actual eligible run time.</p></article>
+  </div></section>
+  <section class="topic-section" id="schedule"><p class="kicker">02 / Scheduling example</p><h2>Schedule from business conditions.</h2><div class="topic-columns">
+    <article class="topic-column"><h3>Business calendar</h3><p>Define the valid operating days and exception dates needed for the workflow.</p></article>
+    <article class="topic-column"><h3>Run window</h3><p>Set an intended start window and business time zone; confirm host and server time assumptions.</p></article>
+    <article class="topic-column"><h3>Predecessor condition</h3><p>Require upstream data readiness instead of relying only on a fixed delay.</p></article>
+    <article class="topic-column"><h3>Deadline and alert</h3><p>Define when the result is due and who should be notified if the flow is at risk.</p></article>
+  </div><div class="topic-callout"><strong>Example:</strong> a weekday report should use its business calendar and wait for the successful completion condition from the overnight load before running.</div></section>
+  <section class="topic-section" id="practice"><p class="kicker">03 / Practice</p><h2>Interview checks.</h2><div class="question-list">
+    <details><summary>What is the purpose of an agent?</summary><p>An agent runs configured work on a host and communicates execution state to the Control-M scheduling environment.</p></details>
+    <details><summary>Why use a calendar instead of a simple daily schedule?</summary><p>Calendars represent business days, holidays, and exceptions, making schedules reflect operational rules rather than a fixed clock alone.</p></details>
+    <details><summary>What time-zone issues can break a schedule?</summary><p>Server/host differences, daylight-saving changes, and calendar time-zone assumptions can shift eligible times. Confirm the business time zone and test boundary dates.</p></details>
+  </div></section>
+  <nav class="topic-footer-nav" aria-label="Adjacent Control-M topics"><a href="index.html#roadmap">&#8592; Control-M roadmap</a><a href="jobs-and-dependencies.html">Next: Jobs and dependencies &#8594;</a></nav>
+</main><footer class="footer"><span>Sai Pavan Rajulapati</span><span>Control-M / Architecture</span></footer></div></body>
+</html>

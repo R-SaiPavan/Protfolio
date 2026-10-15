@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#181918">
+  <title>SQL Aggregation and Window Functions | Sai Pavan Rajulapati</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../shared/skill-page.css"><link rel="stylesheet" href="../shared/topic-page.css">
+</head>
+<body><div class="page"><header class="header"><a class="back" href="index.html#roadmap"><span aria-hidden="true">&#8592;</span> Back to SQL roadmap</a></header><main>
+  <section class="topic-hero"><p class="kicker">SQL roadmap / 03</p><h1>Aggregation and window functions</h1><p class="lede">Summarize at the correct grain, then use window functions for rankings, running totals, and row-level comparisons.</p></section>
+  <nav class="topic-nav" aria-label="Topic sections"><a href="#concepts">Concepts</a><a href="#examples">Examples</a><a href="#practice">Practice</a></nav>
+  <section class="topic-section" id="concepts"><p class="kicker">01 / Concepts</p><h2>Group rows or analyze across rows.</h2><div class="topic-columns">
+    <article class="topic-column"><h3>GROUP BY</h3><p>Collapses input rows into groups and returns aggregate results at the chosen grouping grain.</p></article>
+    <article class="topic-column"><h3>HAVING</h3><p>Filters grouped results after aggregate values are computed; WHERE filters rows before grouping.</p></article>
+    <article class="topic-column"><h3>Window functions</h3><p>Calculate over a partition while preserving individual rows. PARTITION BY defines groups; ORDER BY defines sequence.</p></article>
+    <article class="topic-column"><h3>Ranking functions</h3><p>ROW_NUMBER assigns unique row positions; RANK and DENSE_RANK treat ties differently. Add a stable tie-breaker for deterministic selection.</p></article>
+  </div></section>
+  <section class="topic-section" id="examples"><p class="kicker">02 / Examples</p><h2>Rank within each customer.</h2><pre class="code-example"><code>WITH ranked_orders AS (
+  SELECT customer_id, order_id, order_date,
+         ROW_NUMBER() OVER (
+           PARTITION BY customer_id
+           ORDER BY order_date DESC, order_id DESC
+         ) AS row_num
+  FROM orders
+)
+SELECT customer_id, order_id, order_date
+FROM ranked_orders
+WHERE row_num = 1;</code></pre><p style="margin-top:22px">A running total uses an explicit window frame for predictable results:</p><pre class="code-example"><code>SUM(order_total) OVER (
+  PARTITION BY customer_id
+  ORDER BY order_date, order_id
+  ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+) AS running_total</code></pre></section>
+  <section class="topic-section" id="practice"><p class="kicker">03 / Practice</p><h2>Interview checks.</h2><div class="question-list">
+    <details><summary>What is the difference between ROW_NUMBER, RANK, and DENSE_RANK?</summary><p>ROW_NUMBER assigns a unique number to each row. RANK gives ties the same rank and leaves gaps; DENSE_RANK gives ties the same rank without gaps.</p></details>
+    <details><summary>Why use an explicit window frame?</summary><p>It defines which rows contribute to a window calculation and avoids relying on dialect-specific defaults, especially for running aggregates with duplicate order values.</p></details>
+    <details><summary>When would you use HAVING rather than WHERE?</summary><p>Use WHERE to filter source rows before grouping. Use HAVING to filter groups based on aggregate results such as COUNT or SUM.</p></details>
+  </div></section>
+  <nav class="topic-footer-nav" aria-label="Adjacent SQL topics"><a href="joins-and-data-modeling.html">&#8592; Joins and data modeling</a><a href="performance-and-transactions.html">Next: Performance and transactions &#8594;</a></nav>
+</main><footer class="footer"><span>Sai Pavan Rajulapati</span><span>SQL / Aggregation and analytics</span></footer></div></body>
+</html>
