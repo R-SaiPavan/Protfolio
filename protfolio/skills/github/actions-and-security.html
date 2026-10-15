@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#181918">
+  <title>GitHub Actions and Security | Sai Pavan Rajulapati</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../shared/skill-page.css"><link rel="stylesheet" href="../shared/topic-page.css">
+</head>
+<body><div class="page"><header class="header"><a class="back" href="index.html#roadmap"><span aria-hidden="true">&#8592;</span> Back to GitHub roadmap</a></header><main>
+  <section class="topic-hero"><p class="kicker">GitHub roadmap / 04</p><h1>Actions and security</h1><p class="lede">Automate repeatable repository checks while applying least privilege to workflows, tokens, and secrets.</p></section>
+  <nav class="topic-nav" aria-label="Topic sections"><a href="#workflows">Workflows</a><a href="#security">Security example</a><a href="#practice">Practice</a></nav>
+  <section class="topic-section" id="workflows"><p class="kicker">01 / Workflow model</p><h2>Automate events with explicit permissions.</h2><div class="topic-columns">
+    <article class="topic-column"><h3>Events</h3><p>Workflows can run for repository events, schedules, or manual dispatch. Choose triggers that match the intended validation or deployment stage.</p></article>
+    <article class="topic-column"><h3>Jobs and steps</h3><p>Jobs run on a runner and contain ordered steps. Jobs can have dependencies, separate environments, and distinct permissions.</p></article>
+    <article class="topic-column"><h3>Artifacts and caches</h3><p>Artifacts preserve outputs for later jobs or review; caches speed repeat work but should not substitute for trustworthy build outputs.</p></article>
+    <article class="topic-column"><h3>Secrets and tokens</h3><p>Use protected secrets and the narrowest required token permissions. Avoid exposing secret values in logs, command output, or artifacts.</p></article>
+  </div></section>
+  <section class="topic-section" id="security"><p class="kicker">02 / Security checklist</p><h2>Make the workflow's authority explicit.</h2><pre class="code-example"><code>permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Run project checks here"</code></pre><div class="topic-callout"><strong>Example:</strong> a validation workflow often needs read access to repository contents, not broad write permissions. Pin and review third-party actions according to the repository's supply-chain policy.</div></section>
+  <section class="topic-section" id="practice"><p class="kicker">03 / Practice</p><h2>Interview checks.</h2><div class="question-list">
+    <details><summary>How would you design CI for a data transformation repository?</summary><p>Run fast checks on pull requests, validate SQL or project configuration, and build or test the changed selection where supported. Separate deployment credentials and production jobs from general validation.</p></details>
+    <details><summary>How do you protect secrets in GitHub Actions?</summary><p>Store them in protected repository or environment settings, restrict who can run deployment jobs, use minimal token permissions, and prevent secrets from being printed or uploaded.</p></details>
+    <details><summary>Why should third-party actions be reviewed?</summary><p>Actions execute code in the workflow environment. Review source and permissions, follow the organization's version-pinning policy, and update dependencies through a controlled process.</p></details>
+  </div></section>
+  <nav class="topic-footer-nav" aria-label="Adjacent GitHub topics"><a href="pull-requests-and-reviews.html">&#8592; Pull requests and reviews</a><a href="index.html#roadmap">Back to roadmap &#8594;</a></nav>
+</main><footer class="footer"><span>Sai Pavan Rajulapati</span><span>GitHub / Actions and security</span></footer></div></body>
+</html>

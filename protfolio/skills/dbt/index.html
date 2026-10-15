@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#181918">
+  <title>dbt Study Guide | Sai Pavan Rajulapati</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/skill-page.css">
+  <link rel="stylesheet" href="../shared/topic-page.css">
+  <link rel="stylesheet" href="../shared/skill-guide.css">
+</head>
+<body data-guide="dbt"><div class="page">
+  <header class="header"><a class="back" href="../../index.html#preparation"><span aria-hidden="true">&#8592;</span> Back to Interview Preparation</a></header>
+  <main>
+    <section class="hero"><p class="kicker">Skill notes / Transformations</p><h1>dbt</h1><p class="lede">A focused dbt guide for building modular SQL transformations, validating data, and deploying reliable analytics workflows.</p><span class="status">Roadmap · Core notes · Interview practice</span></section>
+    <nav class="guide-nav" aria-label="dbt guide sections"><a href="#roadmap">Roadmap</a><a href="#notes">Core notes</a><a href="#interview">Interview practice</a></nav>
+    <section class="guide-section" id="roadmap"><p class="kicker">01 / Learning roadmap</p><h2>From source contracts to deployment.</h2><p class="guide-lede">Follow each link for examples and practice. Reviewed progress is saved in this browser.</p><div class="guide-progress"><span>Progress</span><progress data-guide-progress max="4" value="0" aria-label="dbt roadmap completion"></progress><span data-guide-count>0 / 4 complete</span></div><div class="guide-roadmap">
+      <div class="guide-step"><input id="dbt-step-project" type="checkbox" aria-label="Mark project structure and models complete" data-guide-step><label for="dbt-step-project"><a href="project-structure-and-models.html">Project structure and models</a><span>Project files, model SQL, refs, sources, and dependency graph.</span></label></div>
+      <div class="guide-step"><input id="dbt-step-tests" type="checkbox" aria-label="Mark sources and tests complete" data-guide-step><label for="dbt-step-tests"><a href="sources-tests-and-documentation.html">Sources, tests, and documentation</a><span>Source freshness, generic and singular tests, and model docs.</span></label></div>
+      <div class="guide-step"><input id="dbt-step-materializations" type="checkbox" aria-label="Mark materializations complete" data-guide-step><label for="dbt-step-materializations"><a href="materializations-and-incremental-models.html">Materializations and incremental models</a><span>Views, tables, incremental strategies, unique keys, and backfills.</span></label></div>
+      <div class="guide-step"><input id="dbt-step-deploy" type="checkbox" aria-label="Mark deployment and docs complete" data-guide-step><label for="dbt-step-deploy"><a href="deployment-and-documentation.html">Deployment and documentation</a><span>Environments, jobs, CI selection, artifacts, and production checks.</span></label></div>
+    </div></section>
+    <section class="guide-section" id="notes"><p class="kicker">02 / Core notes</p><h2>Keep transformations modular and testable.</h2><div class="guide-notes">
+      <article class="guide-note"><h3>Models and refs</h3><p>A model is a SQL select saved in the project. ref() creates a dependency and resolves the relation for the active target.</p></article>
+      <article class="guide-note"><h3>Sources</h3><p>Sources name raw relations, support lineage, and can define freshness checks for upstream data.</p></article>
+      <article class="guide-note"><h3>Tests</h3><p>Built-in tests validate properties such as uniqueness, non-null values, accepted values, and relationships. Add singular tests for domain rules.</p></article>
+      <article class="guide-note"><h3>Incremental models</h3><p>Incremental models process new or changed data after the initial build. Define a unique key, filter strategy, and a safe full-refresh or backfill plan.</p></article>
+    </div></section>
+    <section class="guide-section" id="interview"><p class="kicker">03 / Interview practice</p><h2>Questions and answer frameworks.</h2><div class="guide-practice">
+      <details><summary>What does ref() do?</summary><p>ref() points to another dbt model, creates a dependency in the DAG, and resolves the correct relation for the current target environment.</p></details>
+      <details><summary>How do generic and singular tests differ?</summary><p>Generic tests are reusable parameterized checks such as unique or not_null. Singular tests are custom SQL queries written for a specific business rule; failing rows are returned by the query.</p></details>
+      <details><summary>When should you use an incremental model?</summary><p>Use one when rebuilding the full dataset is costly and new or changed records can be identified reliably. Define unique-key and update behavior, and test late-arriving data and full refreshes.</p></details>
+      <details><summary>How do you keep dev and production data separate?</summary><p>Use targets and environment-specific configuration, build in isolated schemas, promote reviewed code, and run production jobs with explicit permissions and validated artifacts.</p></details>
+    </div></section>
+  </main><footer class="footer"><span>Sai Pavan Rajulapati</span><span>dbt / Transformations</span></footer>
+  <script src="../shared/skill-guide.js"></script>
+</div></body>
+</html>

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#181918">
+  <title>SQL Query Fundamentals | Sai Pavan Rajulapati</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../shared/skill-page.css"><link rel="stylesheet" href="../shared/topic-page.css">
+</head>
+<body><div class="page"><header class="header"><a class="back" href="index.html#roadmap"><span aria-hidden="true">&#8592;</span> Back to SQL roadmap</a></header><main>
+  <section class="topic-hero"><p class="kicker">SQL roadmap / 01</p><h1>Query foundations</h1><p class="lede">Write clear SELECT statements, filter correctly, handle NULL values, and make result ordering explicit.</p></section>
+  <nav class="topic-nav" aria-label="Topic sections"><a href="#concepts">Concepts</a><a href="#examples">Examples</a><a href="#practice">Practice</a></nav>
+  <section class="topic-section" id="concepts"><p class="kicker">01 / Concepts</p><h2>Be precise about the rows you want.</h2><div class="topic-columns">
+    <article class="topic-column"><h3>SELECT and projection</h3><p>Select only needed columns. Explicit projections clarify the data contract and can reduce unnecessary data transfer.</p></article>
+    <article class="topic-column"><h3>Filtering and NULL</h3><p>Use IS NULL and IS NOT NULL. Comparisons with NULL produce unknown, so use explicit null handling in filters and expressions.</p></article>
+    <article class="topic-column"><h3>CASE expressions</h3><p>Use CASE to express conditional categories or derived values. Include an ELSE branch when a default is meaningful.</p></article>
+    <article class="topic-column"><h3>Ordering</h3><p>Rows are not guaranteed to appear in a stable order without ORDER BY. Include a deterministic tie-breaker when selecting top rows.</p></article>
+  </div></section>
+  <section class="topic-section" id="examples"><p class="kicker">02 / Example</p><h2>Filter, derive, and order.</h2><pre class="code-example"><code>SELECT order_id,
+       customer_id,
+       CASE WHEN order_total &gt;= 500 THEN 'large'
+            ELSE 'standard'
+       END AS order_band
+FROM sales.orders
+WHERE order_date &gt;= DATE '2025-01-01'
+  AND customer_id IS NOT NULL
+ORDER BY order_date DESC, order_id;</code></pre><div class="topic-callout"><strong>Dialect note:</strong> date literals, boolean expressions, and limit syntax vary by database. Verify syntax for the engine you are using.</div></section>
+  <section class="topic-section" id="practice"><p class="kicker">03 / Practice</p><h2>Interview checks.</h2><div class="question-list">
+    <details><summary>Why should you avoid SELECT * in production transformations?</summary><p>It can read and expose unnecessary columns, make downstream schemas fragile, and obscure the intended output contract. Use explicit columns for clarity and controlled schema changes.</p></details>
+    <details><summary>Why does column = NULL not find null rows?</summary><p>NULL represents unknown, so ordinary equality comparison does not evaluate to true. Use IS NULL or IS NOT NULL.</p></details>
+    <details><summary>When is ORDER BY required?</summary><p>When the output order matters, such as presentation or deterministic top-N selection. Without it, row order is not guaranteed.</p></details>
+  </div></section>
+  <nav class="topic-footer-nav" aria-label="Adjacent SQL topics"><a href="index.html#roadmap">&#8592; SQL roadmap</a><a href="joins-and-data-modeling.html">Next: Joins and data modeling &#8594;</a></nav>
+</main><footer class="footer"><span>Sai Pavan Rajulapati</span><span>SQL / Query foundations</span></footer></div></body>
+</html>

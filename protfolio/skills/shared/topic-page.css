@@ -1,0 +1,42 @@
+.topic-nav { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 0 22px; border-bottom: 1px solid var(--line); }
+.topic-nav a { padding: 8px 10px; border: 1px solid var(--line); border-radius: 3px; color: var(--muted); font: 9px var(--mono); text-decoration: none; text-transform: uppercase; }
+.topic-nav a:hover { border-color: var(--accent); color: var(--text); }
+.topic-hero { padding: 58px 0 40px; border-bottom: 1px solid var(--line); }
+.topic-hero .kicker { margin-bottom: 13px; }
+.topic-hero h1 { font-size: clamp(36px, 7vw, 62px); }
+.topic-hero .lede { max-width: 680px; margin-top: 16px; font-size: 14px; }
+.topic-section { padding: 38px 0; border-bottom: 1px solid var(--line); }
+.topic-section h2 { margin: 0 0 13px; font-size: 23px; font-weight: 500; }
+.topic-section > p { max-width: 720px; margin: 0 0 15px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+.topic-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; margin-top: 20px; border-top: 1px solid var(--line); }
+.topic-column { padding: 15px 0; border-bottom: 1px solid var(--line); }
+.topic-column h3 { margin: 0 0 7px; font-size: 13px; font-weight: 500; }
+.topic-column p, .topic-column li { color: var(--muted); font-size: 11px; line-height: 1.65; }
+.topic-column p { margin: 0; }
+.topic-column ul { margin: 0; padding-left: 18px; }
+.diagram-frame { margin: 22px 0 0; padding: 16px; border: 1px solid var(--line); border-radius: 5px; background: #202220; }
+.architecture-diagram { display: block; width: 100%; height: auto; }
+.diagram-frame figcaption { margin-top: 12px; color: var(--muted); font: 9px var(--mono); line-height: 1.5; }
+.diagram-layer { fill: #292c2a; stroke: #5a5d58; stroke-width: 1.5; }
+.diagram-module { fill: #222523; stroke: #515651; stroke-width: 1; }
+.diagram-compute { fill: #34312f; stroke: #bfa08e; stroke-width: 1.5; }
+.diagram-storage { fill: #26302d; stroke: #84988a; stroke-width: 1.5; }
+.diagram-label { fill: #f2f1ed; font: 600 16px "Space Grotesk", sans-serif; }
+.diagram-caption { fill: #a4a7a2; font: 12px "DM Mono", monospace; }
+.diagram-arrow { fill: none; stroke: #d9b5a1; stroke-width: 2; marker-end: url(#arrowhead); }
+.code-example { overflow-x: auto; margin: 18px 0 0; padding: 16px; border: 1px solid var(--line); border-radius: 4px; background: #111312; color: #e8ede7; font: 11px/1.7 var(--mono); white-space: pre; }
+.topic-callout { margin-top: 18px; padding: 13px 15px; border-left: 2px solid var(--accent); background: #202220; color: var(--muted); font-size: 11px; line-height: 1.65; }
+.topic-callout strong { color: var(--text); font-weight: 500; }
+.topic-footer-nav { display: flex; justify-content: space-between; gap: 14px; padding: 22px 0; }
+.topic-footer-nav a { color: var(--muted); font: 9px var(--mono); text-decoration: none; text-transform: uppercase; }
+.topic-footer-nav a:hover { color: var(--text); }
+@media (max-width: 620px) {
+  .topic-hero { padding: 43px 0 30px; }
+  .topic-section { padding: 30px 0; }
+  .topic-section h2 { font-size: 20px; }
+  .topic-columns { grid-template-columns: 1fr; }
+  .diagram-frame { padding: 8px; }
+  .diagram-label { font-size: 18px; }
+  .diagram-caption { font-size: 12px; }
+  .topic-footer-nav { flex-direction: column; }
+}

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#181918">
+  <title>Control-M Monitoring and Recovery | Sai Pavan Rajulapati</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../shared/skill-page.css"><link rel="stylesheet" href="../shared/topic-page.css">
+</head>
+<body><div class="page"><header class="header"><a class="back" href="index.html#roadmap"><span aria-hidden="true">&#8592;</span> Back to Control-M roadmap</a></header><main>
+  <section class="topic-hero"><p class="kicker">Control-M roadmap / 03</p><h1>Monitoring and recovery</h1><p class="lede">Use job status, logs, alerts, and dependencies to find failures and recover without duplicating downstream work.</p></section>
+  <nav class="topic-nav" aria-label="Topic sections"><a href="#monitor">Monitoring</a><a href="#recovery">Recovery example</a><a href="#practice">Practice</a></nav>
+  <section class="topic-section" id="monitor"><p class="kicker">01 / Monitoring</p><h2>Follow a run from status to impact.</h2><div class="topic-columns">
+    <article class="topic-column"><h3>Job status</h3><p>Review current and prior status, start/end times, run attempts, and the condition state of predecessors and successors.</p></article>
+    <article class="topic-column"><h3>Output and logs</h3><p>Inspect job output and application logs for the original failure, not only the final scheduler status.</p></article>
+    <article class="topic-column"><h3>Alerts</h3><p>Route actionable notifications to the owning team and include job, order, batch, error, and recovery context.</p></article>
+    <article class="topic-column"><h3>Dependencies</h3><p>Check whether the delay is a failed job, a late predecessor, a resource wait, or a calendar/schedule rule.</p></article>
+  </div></section>
+  <section class="topic-section" id="recovery"><p class="kicker">02 / Recovery example</p><h2>Diagnose before rerunning.</h2><div class="topic-columns">
+    <article class="topic-column"><h3>1. Identify scope</h3><p>Find the failed job, affected batch, completed predecessors, and downstream jobs that are held or already running.</p></article>
+    <article class="topic-column"><h3>2. Check side effects</h3><p>Determine whether the job partially wrote data or emitted conditions that may affect a retry.</p></article>
+    <article class="topic-column"><h3>3. Correct cause</h3><p>Resolve the source, connection, resource, or application problem before restarting.</p></article>
+    <article class="topic-column"><h3>4. Resume and reconcile</h3><p>Restart from the documented safe point and verify row counts, outputs, and downstream readiness.</p></article>
+  </div><div class="topic-callout"><strong>Rule:</strong> a rerun is safe only when the task's side effects and downstream state are understood.</div></section>
+  <section class="topic-section" id="practice"><p class="kicker">03 / Practice</p><h2>Interview checks.</h2><div class="question-list">
+    <details><summary>A job failed after writing part of its output. What do you do?</summary><p>Confirm the partial-write behavior, identify the affected batch and downstream state, then use the approved cleanup or idempotent replay procedure. Reconcile results before releasing dependents.</p></details>
+    <details><summary>How do you distinguish a failed predecessor from a resource wait?</summary><p>Inspect job status, order flow, logs, resource availability, and timing. Confirm whether the predecessor completed and emitted the expected condition.</p></details>
+    <details><summary>What makes an alert operationally useful?</summary><p>It identifies the impacted workflow and batch, the failure reason, current downstream impact, owning team, and a link or steps for diagnosis.</p></details>
+  </div></section>
+  <nav class="topic-footer-nav" aria-label="Adjacent Control-M topics"><a href="jobs-and-dependencies.html">&#8592; Jobs and dependencies</a><a href="slas-and-operations.html">Next: SLAs and operations &#8594;</a></nav>
+</main><footer class="footer"><span>Sai Pavan Rajulapati</span><span>Control-M / Monitoring and recovery</span></footer></div></body>
+</html>

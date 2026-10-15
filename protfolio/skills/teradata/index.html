@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#181918">
+  <title>Teradata Study Guide | Sai Pavan Rajulapati</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/skill-page.css">
+  <link rel="stylesheet" href="../shared/topic-page.css">
+  <link rel="stylesheet" href="../shared/skill-guide.css">
+</head>
+<body data-guide="teradata">
+  <div class="page">
+    <header class="header"><a class="back" href="../../index.html#preparation"><span aria-hidden="true">&#8592;</span> Back to Interview Preparation</a></header>
+    <main>
+      <section class="hero"><p class="kicker">Skill notes / Data warehouse</p><h1>Teradata</h1><p class="lede">A practical study guide to Teradata architecture, data distribution, SQL tuning, and batch loading for data engineering and ETL interviews.</p><span class="status">Roadmap · Core notes · Interview practice</span></section>
+      <nav class="guide-nav" aria-label="Teradata guide sections"><a href="#roadmap">Roadmap</a><a href="#notes">Core notes</a><a href="#interview">Interview practice</a></nav>
+      <section class="guide-section" id="roadmap">
+        <p class="kicker">01 / Learning roadmap</p><h2>Learn distribution before tuning.</h2><p class="guide-lede">Open a topic for its detailed page. Check off the topics you have reviewed; progress is saved in this browser.</p>
+        <div class="guide-progress"><span>Progress</span><progress data-guide-progress max="4" value="0" aria-label="Teradata roadmap completion"></progress><span data-guide-count>0 / 4 complete</span></div>
+        <div class="guide-roadmap">
+          <div class="guide-step"><input id="td-step-architecture" type="checkbox" aria-label="Mark Teradata architecture complete" data-guide-step><label for="td-step-architecture"><a href="architecture-and-parallelism.html">Architecture and parallelism</a><span>Parsing Engine, BYNET, AMPs, and distributed execution.</span></label></div>
+          <div class="guide-step"><input id="td-step-index" type="checkbox" aria-label="Mark primary indexes complete" data-guide-step><label for="td-step-index"><a href="primary-indexes-and-skew.html">Primary indexes and skew</a><span>PI design, UPI and NUPI, data distribution, and skew diagnosis.</span></label></div>
+          <div class="guide-step"><input id="td-step-optimizer" type="checkbox" aria-label="Mark optimizer and SQL complete" data-guide-step><label for="td-step-optimizer"><a href="optimizer-and-sql.html">Optimizer and SQL</a><span>EXPLAIN, statistics, spool, joins, and QUALIFY.</span></label></div>
+          <div class="guide-step"><input id="td-step-loading" type="checkbox" aria-label="Mark loading and operations complete" data-guide-step><label for="td-step-loading"><a href="loading-and-operations.html">Loading and operations</a><span>Bulk loading, restartability, validation, and monitoring.</span></label></div>
+        </div>
+      </section>
+      <section class="guide-section" id="notes">
+        <p class="kicker">02 / Core notes</p><h2>Concepts to explain clearly.</h2>
+        <div class="guide-notes">
+          <article class="guide-note"><h3>Parallel architecture</h3><p>The Parsing Engine coordinates SQL; BYNET communicates between components; AMPs own and process assigned data in parallel.</p></article>
+          <article class="guide-note"><h3>Primary index</h3><p>The PI controls row distribution and influences access. It is not automatically a business primary key; UPI and NUPI have different uniqueness behavior.</p></article>
+          <article class="guide-note"><h3>Skew and spool</h3><p>Uneven distribution can make a few AMPs bottlenecks. Large intermediate results, skew, and poor plans can drive spool use.</p></article>
+          <article class="guide-note"><h3>Statistics and EXPLAIN</h3><p>Statistics inform optimizer estimates. Use EXPLAIN to inspect planned access and joins, then validate against measured workload behavior.</p></article>
+        </div>
+      </section>
+      <section class="guide-section" id="interview">
+        <p class="kicker">03 / Interview practice</p><h2>Questions and answer frameworks.</h2>
+        <div class="guide-practice">
+          <details><summary>What do the Parsing Engine, BYNET, and AMPs do?</summary><p>The Parsing Engine parses SQL and coordinates its execution plan. BYNET carries communication among system components. AMPs own portions of the data and perform parallel processing for their assigned rows.</p></details>
+          <details><summary>How is a primary index different from a primary key?</summary><p>A Teradata PI controls row distribution and can support access paths. A primary key is a logical integrity constraint. A PI does not necessarily enforce uniqueness; UPI does, while NUPI permits duplicates.</p></details>
+          <details><summary>How would you investigate data skew?</summary><p>Review row distribution, PI choice, and EXPLAIN output. Check if frequent values create hot AMPs or if joins redistribute large inputs. Consider a more even distribution strategy that still supports the workload.</p></details>
+          <details><summary>Why do statistics matter to the optimizer?</summary><p>Statistics improve estimates of row counts and value distributions, influencing join order and access methods. Collect stats on workload-relevant columns and validate with EXPLAIN and measured results.</p></details>
+          <details><summary>What can cause a spool-space error?</summary><p>Large intermediate results, poor join plans, skew, or unexpectedly high row counts can consume spool. Inspect EXPLAIN and step behavior, validate join conditions, and reduce unnecessary intermediate data.</p></details>
+          <details><summary>How would you make an ETL load restartable?</summary><p>Track source batches and load states, validate row counts and keys, and make target updates repeat-safe. Separate landing from publishing so a failed transformation can rerun without duplicating accepted records.</p></details>
+        </div>
+      </section>
+    </main>
+    <footer class="footer"><span>Sai Pavan Rajulapati</span><span>Teradata / Data warehouse</span></footer>
+  </div>
+  <script src="../shared/skill-guide.js"></script>
+</body>
+</html>

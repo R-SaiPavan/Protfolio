@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#181918">
+  <title>Snowflake Security, Recovery and Design | Sai Pavan Rajulapati</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/skill-page.css">
+  <link rel="stylesheet" href="../shared/topic-page.css">
+</head>
+<body><div class="page">
+  <header class="header"><a class="back" href="index.html#roadmap"><span aria-hidden="true">&#8592;</span> Back to Snowflake roadmap</a></header>
+  <main>
+    <section class="topic-hero"><p class="kicker">Snowflake roadmap / 04</p><h1>Security, recovery, and design</h1><p class="lede">Practice explaining access control, protection of sensitive data, recovery boundaries, and workload design using clear operational examples.</p></section>
+    <nav class="topic-nav" aria-label="Topic page sections"><a href="#access">Access control</a><a href="#recovery">Recovery</a><a href="#practice">Practice</a></nav>
+    <section class="topic-section" id="access">
+      <p class="kicker">01 / Access design</p><h2>Start with least privilege.</h2>
+      <div class="topic-columns">
+        <article class="topic-column"><h3>Role-based access control</h3><p>Grant object privileges to roles, then grant roles to users or higher-level roles. Separate duties and use clear role ownership.</p></article>
+        <article class="topic-column"><h3>Masking policies</h3><p>Conditionally transform sensitive column values based on the active role or context. Example: show a full email address to an approved support role and a masked value to other roles.</p></article>
+        <article class="topic-column"><h3>Row access policies</h3><p>Filter which rows a query can return. Example: restrict users to records for regions they are authorized to view.</p></article>
+        <article class="topic-column"><h3>Shares and integrations</h3><p>For governed data exchange, expose approved data through secure sharing patterns and tightly scoped cloud integrations rather than distributing credentials.</p></article>
+      </div>
+    </section>
+    <section class="topic-section" id="recovery">
+      <p class="kicker">02 / Recovery and reliability</p><h2>Know which recovery window applies.</h2>
+      <div class="topic-columns">
+        <article class="topic-column"><h3>Time Travel</h3><p>Use the configured retention window to query historical data, clone an earlier state, or recover dropped objects. Retention limits depend on object type, edition, and configuration.</p></article>
+        <article class="topic-column"><h3>Fail-safe</h3><p>A separate Snowflake-managed recovery period after Time Travel. It is not intended as a routine self-service restore mechanism; contact Snowflake Support when Fail-safe recovery is required.</p></article>
+        <article class="topic-column"><h3>Transient and temporary data</h3><p>Choose table types intentionally. Transient tables trade away Fail-safe protection; temporary tables are scoped to a session. Match retention and recovery needs to the data.</p></article>
+        <article class="topic-column"><h3>Operational design</h3><p>Combine least privilege, audit history, quality checks, failure alerts, and a tested replay plan. Document who owns recovery decisions and how downstream consumers are reconciled.</p></article>
+      </div>
+      <pre class="code-example"><code>UNDROP TABLE analytics.customer_snapshot;</code></pre>
+      <div class="topic-callout"><strong>Example:</strong> if a table is accidentally dropped but remains within its Time Travel retention period, an authorized role may restore it with UNDROP TABLE. Confirm the recovered object and downstream data before resuming dependent jobs.</div>
+    </section>
+    <section class="topic-section" id="practice">
+      <p class="kicker">03 / Practice</p><h2>Interview checks.</h2>
+      <div class="question-list">
+        <details><summary>How do roles inherit access in Snowflake?</summary><p>Privileges are assigned to roles. Roles can be granted to other roles to build inheritance, and users receive roles. The active role context determines which granted privileges are available in a session.</p></details>
+        <details><summary>How is a masking policy different from a row access policy?</summary><p>A masking policy changes the value returned for a column; a row access policy filters which rows are visible. Both should be tested with representative roles and governed under least-privilege access.</p></details>
+        <details><summary>How would you recover a dropped table?</summary><p>First establish whether the object remains within its Time Travel retention window, then use the appropriate recovery operation such as UNDROP TABLE. Fail-safe is a separate Snowflake-managed process, not an alternative query interface.</p></details>
+      </div>
+    </section>
+    <nav class="topic-footer-nav" aria-label="Adjacent Snowflake topics"><a href="performance-and-cost.html">&#8592; Performance and cost</a><a href="index.html#roadmap">Back to roadmap &#8594;</a></nav>
+  </main>
+  <footer class="footer"><span>Sai Pavan Rajulapati</span><span>Snowflake / Security and recovery</span></footer>
+</div></body>
+</html>

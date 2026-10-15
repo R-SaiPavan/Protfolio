@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#181918">
+  <title>dbt Project Structure and Models | Sai Pavan Rajulapati</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../shared/skill-page.css"><link rel="stylesheet" href="../shared/topic-page.css">
+</head>
+<body><div class="page"><header class="header"><a class="back" href="index.html#roadmap"><span aria-hidden="true">&#8592;</span> Back to dbt roadmap</a></header><main>
+  <section class="topic-hero"><p class="kicker">dbt roadmap / 01</p><h1>Project structure and models</h1><p class="lede">Organize SQL transformations into a dependency graph, use refs for model relationships, and keep project configuration clear.</p></section>
+  <nav class="topic-nav" aria-label="Topic sections"><a href="#models">Models</a><a href="#example">Example</a><a href="#practice">Practice</a></nav>
+  <section class="topic-section" id="models"><p class="kicker">01 / Concepts</p><h2>Build a directed transformation graph.</h2><div class="topic-columns">
+    <article class="topic-column"><h3>Models</h3><p>A model is a SQL select statement saved in the project. dbt materializes it according to configuration and target.</p></article>
+    <article class="topic-column"><h3>ref()</h3><p>Use ref() to reference another model. It creates a dependency edge and resolves the correct relation for the active target.</p></article>
+    <article class="topic-column"><h3>Sources</h3><p>Use source() to declare raw inputs, document lineage, and optionally define freshness expectations.</p></article>
+    <article class="topic-column"><h3>Project organization</h3><p>Separate staging, intermediate, and mart layers when it clarifies ownership and transformation intent. Keep names and folders consistent.</p></article>
+  </div></section>
+  <section class="topic-section" id="example"><p class="kicker">02 / Example</p><h2>Reference models, not hard-coded relations.</h2><pre class="code-example"><code>WITH source_orders AS (
+  SELECT *
+  FROM {{ source('sales', 'orders') }}
+),
+customer_totals AS (
+  SELECT customer_id, SUM(order_total) AS total_sales
+  FROM source_orders
+  GROUP BY customer_id
+)
+SELECT *
+FROM customer_totals</code></pre><div class="topic-callout"><strong>Dependency example:</strong> if <code>fct_orders</code> uses <code>ref('stg_orders')</code>, dbt records that edge in the DAG and builds the upstream model before the downstream model.</div></section>
+  <section class="topic-section" id="practice"><p class="kicker">03 / Practice</p><h2>Interview checks.</h2><div class="question-list">
+    <details><summary>What does ref() provide beyond a table name?</summary><p>It resolves the relation for the active target and records a dependency in the DAG so dbt can order builds and show lineage.</p></details>
+    <details><summary>Why separate staging and mart models?</summary><p>Staging standardizes raw source structures; marts expose business-ready datasets. Clear layers make logic easier to test, understand, and reuse.</p></details>
+    <details><summary>How does dbt determine build order?</summary><p>It parses dependencies such as ref() and source() calls to construct a directed acyclic graph, then schedules upstream nodes before dependents.</p></details>
+  </div></section>
+  <nav class="topic-footer-nav" aria-label="Adjacent dbt topics"><a href="index.html#roadmap">&#8592; dbt roadmap</a><a href="sources-tests-and-documentation.html">Next: Sources and tests &#8594;</a></nav>
+</main><footer class="footer"><span>Sai Pavan Rajulapati</span><span>dbt / Project structure</span></footer></div></body>
+</html>

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#181918">
+  <title>SQL Performance and Transactions | Sai Pavan Rajulapati</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../shared/skill-page.css"><link rel="stylesheet" href="../shared/topic-page.css">
+</head>
+<body><div class="page"><header class="header"><a class="back" href="index.html#roadmap"><span aria-hidden="true">&#8592;</span> Back to SQL roadmap</a></header><main>
+  <section class="topic-hero"><p class="kicker">SQL roadmap / 04</p><h1>Performance and transactions</h1><p class="lede">Read query plans, reduce unnecessary work, and use transactions to protect data changes.</p></section>
+  <nav class="topic-nav" aria-label="Topic sections"><a href="#performance">Performance</a><a href="#transactions">Transactions</a><a href="#practice">Practice</a></nav>
+  <section class="topic-section" id="performance"><p class="kicker">01 / Performance</p><h2>Measure before rewriting.</h2><div class="topic-columns">
+    <article class="topic-column"><h3>Execution plan</h3><p>Inspect access paths, estimated rows, join methods, sorts, and expensive operators. Compare estimates to actual behavior when the database exposes it.</p></article>
+    <article class="topic-column"><h3>Predicates</h3><p>Filter early when semantics allow. Keep predicates compatible with indexed or partitioned columns and avoid unnecessary casts or functions around filter columns.</p></article>
+    <article class="topic-column"><h3>Projection and joins</h3><p>Read needed columns only. Check join cardinality, key uniqueness, and whether aggregates should be computed before joining.</p></article>
+    <article class="topic-column"><h3>Indexes and statistics</h3><p>Indexes and statistics are engine-specific. Use the target database's plan and telemetry, and evaluate maintenance and write costs as well as read speed.</p></article>
+  </div></section>
+  <section class="topic-section" id="transactions"><p class="kicker">02 / Transactions</p><h2>Keep related changes consistent.</h2><div class="topic-columns">
+    <article class="topic-column"><h3>Atomicity</h3><p>Group logically related changes so they commit together or roll back together, according to the engine and transaction boundaries.</p></article>
+    <article class="topic-column"><h3>Isolation</h3><p>Understand the configured isolation behavior and how concurrent reads and writes can affect the transaction.</p></article>
+    <article class="topic-column"><h3>Batch commits</h3><p>Choose commit frequency based on recovery, locking, log or spool pressure, and workload limits; test with representative volume.</p></article>
+    <article class="topic-column"><h3>Safe retry</h3><p>Use stable batch identifiers and idempotent writes so a retry after an uncertain failure does not duplicate results.</p></article>
+  </div><pre class="code-example"><code>BEGIN TRANSACTION;
+
+UPDATE account_summary
+SET balance = balance - 100
+WHERE account_id = 101;
+
+UPDATE account_summary
+SET balance = balance + 100
+WHERE account_id = 202;
+
+COMMIT;</code></pre><div class="topic-callout"><strong>Note:</strong> transaction syntax and autocommit behavior vary by database and client. Confirm the execution environment before using a pattern.</div></section>
+  <section class="topic-section" id="practice"><p class="kicker">03 / Practice</p><h2>Interview checks.</h2><div class="question-list">
+    <details><summary>How would you investigate a slow SQL statement?</summary><p>Inspect its plan and runtime metrics, then check scans, filters, join cardinality, sorts, statistics, and concurrency. Make one measured change and compare results.</p></details>
+    <details><summary>Why avoid applying a function to a filtered column?</summary><p>It can prevent some engines from using an index or pruning efficiently. Prefer a range or equivalent predicate that preserves the column expression when possible, then confirm in the plan.</p></details>
+    <details><summary>How do transactions help an ETL load?</summary><p>They can keep a group of target changes consistent. Pair them with batch tracking and a restart strategy so partial failures can be safely retried.</p></details>
+  </div></section>
+  <nav class="topic-footer-nav" aria-label="Adjacent SQL topics"><a href="aggregation-and-window-functions.html">&#8592; Aggregation and windows</a><a href="index.html#roadmap">Back to roadmap &#8594;</a></nav>
+</main><footer class="footer"><span>Sai Pavan Rajulapati</span><span>SQL / Performance and transactions</span></footer></div></body>
+</html>
